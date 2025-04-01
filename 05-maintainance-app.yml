@@ -1,0 +1,20 @@
+---
+- name: Deploy Under Maintenance App
+  hosts: n2
+  become: yes
+
+  tasks:
+  - name: Update Maintenance
+    copy:
+      src: "{{ item.src }}" 
+      dest: "{{ item.dest }}"
+    loop:
+      - src: maintenance.html
+        dest: /var/www/html/index.html
+      - src: maintenance.css
+        dest: /var/www/html/
+      - src: oceanbranch.jpg
+        dest: /var/www/html/
+      - src: maintenance_analytics.js
+        dest: /var/www/html/
+...

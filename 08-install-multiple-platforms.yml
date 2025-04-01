@@ -1,0 +1,21 @@
+---
+- name: Install Ubuntu Server
+  hosts: n2
+  become: yes
+
+  tasks:
+    - name: Install Apache2
+      yum:
+        name: apache2
+        state: present
+
+    - name: start apache2
+      service:
+        name: apache2
+        state: started 
+
+    - name: Enable apache2
+      service:
+        name: apache2
+        enabled: yes
+...
