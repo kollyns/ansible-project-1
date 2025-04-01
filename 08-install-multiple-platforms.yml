@@ -1,21 +1,43 @@
 ---
-- name: Install Ubuntu Server
-  hosts: n2
+- name: Install http Server
+  hosts: g1
   become: yes
 
   tasks:
-    - name: Install Apache2
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      when: ansible_distribtion == "Amazon" or ansible_distribtion == "Centos"
+
+    - name: start httpd
+      service:
+        name: httpd
+        state: started 
+      when: ansible_distribtion == "Amazon" or ansible_distribtion == "Centos"
+
+    - name: Enable httpd
+      service:
+        name: httpd
+        enabled: yes
+      when: ansible_distribtion == "Amazon" or ansible_distribtion == "Centos"
+
+  - name: Install apache2
       yum:
         name: apache2
         state: present
+      when: ansible_distribtion == "Ubuntu" or ansible_distribtion == "Debian"
 
     - name: start apache2
       service:
         name: apache2
         state: started 
+      when: ansible_distribtion == "Ubuntu" or ansible_distribtion == "Debian"
 
     - name: Enable apache2
       service:
         name: apache2
         enabled: yes
+      when: ansible_distribtion == "Amazon" or ansible_distribtion == "Debian"
+
 ...
